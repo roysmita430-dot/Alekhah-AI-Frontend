@@ -1,7 +1,6 @@
-streamlit
-streamlit-drawable-canvas
+streamlit==1.28.2
+streamlit-drawable-canvas==0.9.3
 matplotlib
-pandas
 numpy
+pandas
 requests
-Pillow
