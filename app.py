@@ -32,7 +32,6 @@ def create_graph_paper(width, height, grid_size=25):
 st.set_page_config(page_title="Alekhah AI — Reverse Desmos", layout="wide")
 
 st.title("📈 Alekhah AI — Draw & Discover the Equation")
-
 st.write("Draw your curve on the **graph paper** below. The AI will infer the most probable mathematical function behind it.")
 
 # Sidebar
@@ -44,7 +43,8 @@ grid_size = st.sidebar.slider("🧮 Grid Size", 15, 50, 25)
 # Create graph paper background
 width, height = 600, 400
 graph_paper = create_graph_paper(width, height, grid_size)
-st.sidebar.image(graph_paper, caption="Graph Paper Preview", use_container_width=True)
+# ✅ Fixed: use width instead of deprecated 'use_container_width'
+st.sidebar.image(graph_paper, caption="Graph Paper Preview", width=300)
 
 # Draw canvas
 canvas_result = st_canvas(
@@ -74,7 +74,7 @@ if st.button("🔍 Analyze Graph"):
 
         if len(points) > 10:
             df = pd.DataFrame(points, columns=["x", "y"])
-            st.subheader("🧠 Alekhah AI having a chat with Guass and Fourier...")
+            st.subheader("🧠 Alekhah AI having a chat with Gauss and Fourier...")
             try:
                 response = requests.post(
                     "https://alekhah-ai.onrender.com/predict",  # Replace with your actual backend URL
