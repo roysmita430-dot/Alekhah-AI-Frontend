@@ -43,8 +43,7 @@ grid_size = st.sidebar.slider("🧮 Grid Size", 15, 50, 25)
 # Create graph paper background
 width, height = 600, 400
 graph_paper = create_graph_paper(width, height, grid_size)
-# ✅ Fixed: use width instead of deprecated 'use_container_width'
-st.sidebar.image(graph_paper, caption="Graph Paper Preview", width=300)
+st.sidebar.image(graph_paper, caption="Graph Paper Preview", use_column_width=True)
 
 # Draw canvas
 canvas_result = st_canvas(
@@ -75,16 +74,25 @@ if st.button("🔍 Analyze Graph"):
         if len(points) > 10:
             df = pd.DataFrame(points, columns=["x", "y"])
             st.subheader("🧠 Alekhah AI having a chat with Gauss and Fourier...")
+
             try:
                 response = requests.post(
-                    "https://alekhah-ai.onrender.com/predict",  # Replace with your actual backend URL
+                    "https://alekhah-ai.onrender.com/predict",
                     json={"x": df["x"].tolist(), "y": df["y"].tolist()},
                     timeout=60
                 )
 
                 if response.status_code == 200:
                     result = response.json()
-                    st.success(f"**Predicted Equation:** {result['equation']}")
+
+                    # Display Desmos-ready equation
+                    st.markdown("**Predicted Equation (x/y terms, ready for Desmos):**")
+                    st.code(result["equation"], language="python")
+
+                    # Display LaTeX equation
+                    st.markdown("**LaTeX Render:**")
+                    st.latex(result["equation_latex"])
+
                     st.caption(f"Type: {result.get('function_type', 'Unknown')}")
 
                     # Plotting
@@ -95,6 +103,7 @@ if st.button("🔍 Analyze Graph"):
                     ax.axvline(0, color="gray", linewidth=0.8)
                     ax.legend()
                     st.pyplot(fig)
+
                 else:
                     st.error(f"Backend Error: {response.text}")
 
