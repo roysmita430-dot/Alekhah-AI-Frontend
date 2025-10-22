@@ -74,10 +74,10 @@ if st.button("🔍 Analyze Graph"):
 
         if len(points) > 10:
             df = pd.DataFrame(points, columns=["x", "y"])
-            st.subheader("🧠 Sending curve data to Alekhah AI backend...")
+            st.subheader("🧠 Alekhah AI having a chat with Guass and Fourier...")
             try:
                 response = requests.post(
-                    "https://your-backend-url.onrender.com/predict",  # Replace with your actual backend URL
+                    "https://alekhah-ai.onrender.com/predict",  # Replace with your actual backend URL
                     json={"x": df["x"].tolist(), "y": df["y"].tolist()},
                     timeout=60
                 )
