@@ -1,6 +1,7 @@
 streamlit
 streamlit-drawable-canvas
-numpy
-pandas
 matplotlib
+pandas
+numpy
 requests
+Pillow
